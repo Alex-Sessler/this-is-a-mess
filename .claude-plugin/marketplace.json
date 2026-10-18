@@ -1,0 +1,16 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "this-is-a-mess",
+  "description": "Turn a pile of files and links into one Markdown source of truth.",
+  "owner": {
+    "name": "Alexander Sessler"
+  },
+  "plugins": [
+    {
+      "name": "this-is-a-mess",
+      "description": "Collect a pile, read it in subagents, grill every conflict and gap, write one cited source of truth.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

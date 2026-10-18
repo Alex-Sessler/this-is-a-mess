@@ -1,0 +1,11 @@
+{
+  "name": "this-is-a-mess",
+  "version": "0.1.0",
+  "description": "Turn a pile of files and links into one Markdown source of truth: collect, read each source in a subagent, grill until every conflict, gap and weak claim is settled, then write it with inline citations.",
+  "author": {
+    "name": "Alexander Sessler",
+    "url": "https://github.com/Alex-Sessler"
+  },
+  "repository": "https://github.com/Alex-Sessler/this-is-a-mess",
+  "license": "MIT"
+}
