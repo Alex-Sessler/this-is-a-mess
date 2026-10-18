@@ -13,11 +13,11 @@ Every file this skill writes goes in the current folder. Originals stay read-onl
 
 ## Working file
 
-Create `mess.working.md` in the current folder on the first message. It is the resume point: update it at the end of every step and every grilling round. Sections:
+Create `mess.working.md` in the current folder on the first message. It is the resume point: update it after every intake addition, every digest that lands, every grilling round, and every output step. Sections:
 
 - **Phase**: intake | grilling | outline | writing | clean-slate.
-- **Sources**: one line per source, `[n] <path or URL> · <kind> · <status> · <digest path>`. Status is reading, digested, unreadable, or dropped-outdated. Numbers are permanent; they become the citations.
-- **Settled**: every decision, one line each: the question, the answer, the round, the sources it touches. Outdated drops go here with their evidence.
+- **Sources**: one line per source, `[n] <path or URL> · <kind> · <status> · <digest path>`. Status is reading, digested, unreadable, or gone. Numbers are permanent; they become the citations.
+- **Settled**: every decision, one line each: the question, the answer, the round, the sources it touches. Outdated drops go here per claim, with their evidence.
 - **Open**: the current frontier.
 
 Once the topic is settled (end of grilling) and every reader has finished, rename it to `<topic>.working.md` and `mess.digests/` to `<topic>.digests/`, and fix the digest paths inside. Renaming while a reader is still writing loses its digest.
@@ -28,7 +28,7 @@ Once the topic is settled (end of grilling) and every reader has finished, renam
 
 ## 1. Intake
 
-The arguments are the first items; every later message adds more until the user says **done**. Answer each addition with the running count only ("7 in the pile"), plus one line for any flag or candidate list below. Start the reader for each item the moment it arrives.
+The arguments are the first addition; every later message adds more until the user says **done**. Answer each addition with the running count only ("7 in the pile"), plus one line for any flag or candidate list below. Start the reader for each item the moment it arrives.
 
 Source kinds:
 
@@ -51,14 +51,14 @@ When a digest lands, read it, mark the source digested, and surface any candidat
 
 ## 3. Grilling
 
-Invoke the `grilling` skill and run its design-tree rounds over the digests, with these overrides. If it is not installed, run the rounds as described here.
+Invoke the `grilling` skill and run its design-tree rounds over the digests. Where it and this section differ, this section wins: its rounds follow the class order below rather than taking the whole frontier at once, its text round format gives way to AskUserQuestion, and its closing confirmation is the outline approval at the end of this phase. If it is not installed, run the rounds as described here.
 
-- Every round goes through AskUserQuestion: at most 4 questions per call, a larger frontier split over consecutive calls, the recommended option first and labelled "(Recommended)".
-- Facts are yours. When a check settles a question (is the link alive, what is the ticket's status, does the sum add up, which version is newer), run it, through a subagent when it means reading a source. The user only gets decisions.
+- Every question to the user, in grilling and after it, goes through AskUserQuestion: at most 4 questions per call, a larger frontier split over consecutive calls, the recommended option first and labelled "(Recommended)".
+- Facts are yours. When a check settles a question (is the link alive, what is the ticket's status, does the sum add up, which version is newer, is a general-knowledge premise true), run it, through a subagent (`model: sonnet`, `effort: low`) when it means reading a source or the web. The user only gets decisions.
 
 Work the frontier in this order. A later class waits until the earlier ones are empty; a clash found along the way joins the next round regardless.
 
-1. **Outdated.** Drop without asking on hard evidence: the source says it is superseded, the ticket is closed as won't-do, a newer source explicitly replaces it, or the link or file is gone. Record claim, source, evidence and replacement in Settled. Age alone is a question, not evidence: quote the claim, its date, and any newer source covering the same ground.
+1. **Outdated.** Drop without asking on hard evidence: the source says it is superseded, the ticket is closed as won't-do, a newer source explicitly replaces it, or the link or file is gone. Drop only the part the evidence covers; the rest of the claim stays live. Record claim, source, evidence and replacement in Settled. Age alone is a question, not evidence: quote the claim, its date, and any newer source covering the same ground. When a newer source states something different without saying it replaces the older one, that is a contradiction, not an outdated question: it goes to class 2, with outdated as a candidate cause.
 2. **Contradictions**, every kind:
    - inside one source (flagged in its digest);
    - between sources (you find these by comparing digests);
@@ -79,15 +79,15 @@ Done when the frontier is empty in every class and the last round's answers prod
 
 It holds everything. The body is the truth, shaped to fit this pile (a spec reads like a spec, a plan like a plan), with an inline citation after every claim: `[n]` for source n, `[grilling]` for a user answer, both when both apply. Then these fixed sections, in order:
 
-- **Outdated**: claim, source, why it is outdated, what replaced it.
-- **Contradictions**: both statements, their sources, how it was settled, and why.
+- **Outdated**: everything settled in the Outdated class: claim, source, why it is outdated, what replaced it.
+- **Contradictions**: everything settled in the Contradictions class, including a newer source silently changing an older one: both statements, their sources, how it was settled, and why.
 - **Challenged claims**: the rejected ones and the ones that stood, each with the reason and `[grilling]`.
-- **Sources**: every input as `[n]`, including unreadable and dropped ones, and what it contributed.
+- **Sources**: every input as `[n]`, including unreadable and gone ones, what it contributed, and which of its claims were dropped.
 
 ### `<topic>.clean_slate.md`
 
-Only the one truth, for a reader who never saw the pile: the master's body without citations, and nothing else. It has no link to the master and no decisions, outdated items or contradictions.
+Only the one truth, for a reader who never saw the pile: the master's body without citations, and nothing else. It states the settled outcomes as plain fact, with no link to the master and no record of decisions, outdated items or contradictions.
 
-Write the master, draft the clean slate from it, and show the clean slate in full. On the user's confirmation, write it, then delete the working file and the digests folder. If they ask for changes, revise and show it again.
+Write the master, draft the clean slate from it, and show the draft in full in your reply, then ask for confirmation. On confirmation, write it, then delete the working file and the digests folder. If they ask for changes, revise and show it again.
 
 Done when both files exist and the working file and digests folder are gone.
